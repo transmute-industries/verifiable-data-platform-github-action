@@ -6151,6 +6151,8 @@ const getOpts = () => {
     apiBaseUrl: core.getInput("api-base-url"),
     clientId: core.getInput("client-id"),
     clientSecret: core.getInput("client-secret"),
+
+    verifiableCredential: core.getInput("verifiable-credential"),
   };
 };
 
@@ -6175,6 +6177,13 @@ const operations = {
     const apiBaseUrl = process.env.verifiable_data_platform_url;
     const accessToken = process.env.verifiable_data_platform_access_token;
     const response = await vdp.credentials.get({apiBaseUrl, accessToken})
+    core.exportVariable("verifiable_data_platform_api_response", response)
+    return null;
+  },
+  storeCredential:  async ({verifiableCredential}) => {
+    const apiBaseUrl = process.env.verifiable_data_platform_url;
+    const accessToken = process.env.verifiable_data_platform_access_token;
+    const response = await vdp.credentials.store({apiBaseUrl, accessToken, verifiableCredential: JSON.parse(verifiableCredential)})
     core.exportVariable("verifiable_data_platform_api_response", response)
     return null;
   }
@@ -6246,12 +6255,29 @@ const getCredentials = async ({apiBaseUrl, accessToken}) => {
   return res.data;
 }
 
+
+const storeCredential = async ({apiBaseUrl, accessToken, verifiableCredential}) => {
+  try {
+    const url = apiBaseUrl +  '/credentials'
+    const res = await axios.post(url, verifiableCredential, {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`
+      },
+    });
+    return res.data;
+  } catch(e){
+    console.error(e)
+    return null
+  }
+}
+
 const token = {
   get: getAccessToken
 }
 
 const credentials = {
-  get: getCredentials
+  get: getCredentials,
+  store: storeCredential,
 }
 
 const api = { token, credentials };
