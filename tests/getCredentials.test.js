@@ -1,11 +1,8 @@
-const operationSwitch = require('../src');
-
-
-let accessToken = ''
+const operationSwitch = require('../src/operationSwitch');
 
 describe("getCredentials", () => {
   beforeAll(async ()=>{
-    accessToken = await operationSwitch({
+    await operationSwitch({
       operationId: 'getAccessToken',
       did: process.env.ORGANIZATION_DID_WEB,
       tokenEndpoint: process.env.TOKEN_ENDPOINT,
@@ -16,12 +13,10 @@ describe("getCredentials", () => {
     });
   })
   it("get all credentials", async () => {
-    const response = await operationSwitch({
+    expect(process.env.verifiable_data_platform_api_response).toBeUndefined()
+    await operationSwitch({
       operationId: 'getCredentials',
     });
-    expect(response.page).toBeDefined();
-    expect(response.count).toBeDefined();
-    expect(response.items).toBeDefined();
-    // console.log(response)
+    expect(process.env.verifiable_data_platform_api_response).toBeDefined()
   });
 });

@@ -1,5 +1,3 @@
-
-
-const operationSwitch = require('./operationSwitch');
-
-module.exports = operationSwitch;
+module.exports = {
+  message: 'nothing to export.'
+}

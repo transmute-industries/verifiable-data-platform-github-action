@@ -43,7 +43,8 @@ jobs:
         with:
           path: |
             ./*
-          key: ${{ github.sha }} 
+          key: ${{ github.sha }}
+           
       - name: Get Access Token
         uses: ./
         id: getAccessToken
@@ -55,21 +56,12 @@ jobs:
           token-audience: ${{ secrets.TOKEN_AUDIENCE }} 
           client-id: ${{ secrets.CLIENT_ID }}
           client-secret: ${{ secrets.CLIENT_SECRET }}
+
       - name: Get Credentials
         uses: ./
         id: getCredentials
         with:
           operation-id: getCredentials
-  
-      - name: Review the credentials
-        run: |-
-          echo '${{ steps.getCredentials.outputs.json }}' >> credentials.json
-
-      # - name: Upload the work as an artifact
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: recent-credentials
-      #     path: credentials.json
           
   
 

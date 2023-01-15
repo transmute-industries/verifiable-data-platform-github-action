@@ -3,10 +3,10 @@
   "version": "0.0.1",
   "description": "",
   "private": true,
-  "main": "index.js",
+  "main": "./src/index.js",
   "scripts": {
-    "build": "ncc build index.js --license licenses.txt",
-    "test": "source .env && PERSONAL_ACCESS_TOKEN=$PERSONAL_ACCESS_TOKEN ORGANIZATION_DID_WEB=$ORGANIZATION_DID_WEB TOKEN_AUDIENCE=$TOKEN_AUDIENCE TOKEN_ENDPOINT=$TOKEN_ENDPOINT API_BASE_URL=$API_BASE_URL CLIENT_ID=$CLIENT_ID CLIENT_SECRET=$CLIENT_SECRET NODE_NO_WARNINGS=1 NODE_OPTIONS='--experimental-vm-modules' jest",
+    "build": "ncc build ./src/run.js --license licenses.txt",
+    "test": "source .env && ORGANIZATION_DID_WEB=$ORGANIZATION_DID_WEB TOKEN_AUDIENCE=$TOKEN_AUDIENCE TOKEN_ENDPOINT=$TOKEN_ENDPOINT API_BASE_URL=$API_BASE_URL CLIENT_ID=$CLIENT_ID CLIENT_SECRET=$CLIENT_SECRET NODE_NO_WARNINGS=1 NODE_OPTIONS='--experimental-vm-modules' jest",
     "coverage": "NODE_OPTIONS='--experimental-vm-modules' jest --ci --coverage",
     "prerelease": "npm run build",
     "release": "npm version patch && git add ./package.json",

@@ -2,8 +2,7 @@
 
 const axios = require('axios');
 
-const getAccessToken = async (env) => {
-  const { tokenEndpoint, tokenAudience, clientId, clientSecret } = env;
+const getAccessToken = async ({ tokenEndpoint, tokenAudience, clientId, clientSecret }) => {
   const res = await axios({
     method: 'post',
     url: tokenEndpoint,
@@ -18,23 +17,12 @@ const getAccessToken = async (env) => {
   return access_token;
 };
 
-const getTokenFromEnv = async (env)=>{
-  if (env.accessToken){
-    return env.accessToken
-  }else {
-    const token = await getAccessToken(env);
-    return token;
-  }
-}
-
-const getCredentials = async (env) => {
-  const token = await getTokenFromEnv(env);
-  const { apiBaseUrl } = env;
+const getCredentials = async ({apiBaseUrl, accessToken}) => {
   const res = await axios({ 
     method: 'get',
     url: apiBaseUrl +  '/credentials',
     headers: {
-      'Authorization': `Bearer ${token}`
+      'Authorization': `Bearer ${accessToken}`
     }
   });
   return res.data;

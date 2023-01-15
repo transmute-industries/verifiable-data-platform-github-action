@@ -1,6 +1,6 @@
 # Verifiable Data Platform GitHub Action
 
-🚧 Experimental 🏗️. 
+🚧 Experimental 🏗️.  (DO NOT USE THIS)
 
 [![CI](https://github.com/transmute-industries/verifiable-data-platform-github-action/actions/workflows/ci.yml/badge.svg)](https://github.com/transmute-industries/verifiable-data-platform-github-action/actions/workflows/ci.yml)
 ![Branches](./badges/coverage-branches.svg)
