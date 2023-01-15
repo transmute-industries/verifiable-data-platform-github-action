@@ -17,8 +17,9 @@ const operations = {
     return fakeToken
   },
   getCredentials: async (env)=>{
-    if (env.accessToken !== fakeToken){
-      return ['invalid-fake-token' + fakeToken]
+    // don't even pass the token in args...?
+    if (process.env.access_token !== fakeToken){
+      return ['invalid-fake-token-' + fakeToken]
     }
     return {
       page: 0,

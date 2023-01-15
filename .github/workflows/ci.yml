@@ -36,8 +36,6 @@ jobs:
       - coverage
     runs-on: ubuntu-latest
     name: Get Credentials
-    outputs:
-      json: ${{ steps.frame.outputs.json }}
     steps:
       - name: Cache Restore
         uses: actions/cache@v3
@@ -63,16 +61,17 @@ jobs:
         with:
           operation-id: getCredentials
           api-base-url: ${{ secrets.API_BASE_URL }}
-          access-token: ${{ steps.getAccessToken.outputs.access_token }}
+          
           
       - name: Review the credentials
         run: |-
           echo '${{ steps.getCredentials.outputs.json }}' >> credentials.json
-      - name: Upload the work as an artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: recent-credentials
-          path: credentials.json
+
+      # - name: Upload the work as an artifact
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: recent-credentials
+      #     path: credentials.json
           
   
 
