@@ -3,7 +3,7 @@ const operationSwitch = require('../src');
 
 let accessToken = ''
 
-describe.skip("getCredentials", () => {
+describe("getCredentials", () => {
   beforeAll(async ()=>{
     accessToken = await operationSwitch({
       operationId: 'getAccessToken',
@@ -18,8 +18,6 @@ describe.skip("getCredentials", () => {
   it("get all credentials", async () => {
     const response = await operationSwitch({
       operationId: 'getCredentials',
-      accessToken,
-      apiBaseUrl: process.env.API_BASE_URL,
     });
     expect(response.page).toBeDefined();
     expect(response.count).toBeDefined();

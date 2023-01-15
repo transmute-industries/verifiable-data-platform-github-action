@@ -14,17 +14,20 @@ const fakeToken = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkw
 
 const operations = {
   getAccessToken: async (env)=>{
+    process.env.verifiable_data_platform_access_token = fakeToken;
+    // this would be a loop...
+    // process.env.API_BASE_URL = env.apiBaseUrl;
     return fakeToken
   },
   getCredentials: async (env)=>{
-    // don't even pass the token in args...?
-    if (process.env.access_token !== fakeToken){
-      return ['invalid-fake-token-' + fakeToken]
-    }
-    return {
-      page: 0,
-      count: 1,
-      items: [ { id:'123' } ]
+    if (process.env.verifiable_data_platform_access_token === fakeToken){
+      return {
+        page: 0,
+        count: 1,
+        items: [ { id:'123' } ]
+      }
+    } else {
+      return { message: 'token is not valid'}
     }
   }
 }

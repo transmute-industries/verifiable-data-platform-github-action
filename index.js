@@ -5,7 +5,6 @@ const operationSwitch = require("./src");
 const getOpts = () => {
   return {
     operationId: core.getInput("operation-id"),
-    accessToken: core.getInput("access-token"),
     // from .env
     did: core.getInput("did"),
     tokenEndpoint: core.getInput("token-endpoint"),
@@ -23,7 +22,7 @@ async function run() {
     // TODO: consider security issues with this approach...
     // The action should probably only export masked variables...
     if (opts.operationId === 'getAccessToken'){
-      core.exportVariable("access_token", response)
+      core.exportVariable("verifiable_data_platform_access_token", response)
     } else {
       core.setOutput("json", JSON.stringify(response));
     }

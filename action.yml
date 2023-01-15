@@ -3,9 +3,7 @@ description: |
   This action enables Verifiable Data Platform operations within GitHub Workflows.
   See: https://platform.transmute.industries/openapi/
 inputs:
-  access-token:
-    description: |
-      An access token for an application on the Transmute Verifiable Data Platform.
+
   operation-id:
     description: |
       An operationId from the API Documentation.

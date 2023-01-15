@@ -60,9 +60,7 @@ jobs:
         id: getCredentials
         with:
           operation-id: getCredentials
-          api-base-url: ${{ secrets.API_BASE_URL }}
-          
-          
+  
       - name: Review the credentials
         run: |-
           echo '${{ steps.getCredentials.outputs.json }}' >> credentials.json
