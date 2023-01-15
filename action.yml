@@ -1,0 +1,39 @@
+name: "Transmute Verifiable Data Platform GitHub Action"
+description: |
+  This action enables Verifiable Data Platform operations within GitHub Workflows.
+  See: https://platform.transmute.industries/openapi/
+inputs:
+  access-token:
+    description: |
+      An access token for an application on the Transmute Verifiable Data Platform.
+  operation-id:
+    description: |
+      An operationId from the API Documentation.
+    require: true
+  
+  api-base-url:
+    description: |
+      Transmute application api base url
+  did:
+    description: |
+      Organization's decentralized identifier
+  token-endpoint:
+    description: |
+      Transmute application token endpoint
+  token-audience:
+    description: |
+      Transmute application token audience
+  client-id:
+    description: |
+      Transmute application client id
+  client-secret:
+    description: |
+      Transmute application client secret
+
+outputs:
+  json:
+    description: "The output as json."
+
+runs:
+  using: "node16"
+  main: "dist/index.js"

@@ -1,0 +1,80 @@
+name: CI
+
+on: [push, workflow_dispatch]
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    name: Coverage
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install
+        run: npm ci
+      - name: Coverage
+        run: npm run coverage
+      - name: Build
+        run: npm run build
+      - name: Badges
+        uses: jpb06/jest-badges-action@latest
+        with:
+          branches: main
+      - name: Cache Save
+        id: cache-save
+        uses: actions/cache@v3
+        with:
+          path: |
+            ./*
+          key: ${{ github.sha }}
+          # TODO: be more like:
+          # path: |
+          #     ./dist/*
+          #     ./action.yml
+          #   key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+  get-credentials:
+    needs:
+      - coverage
+    runs-on: ubuntu-latest
+    name: Get Credentials
+    outputs:
+      json: ${{ steps.frame.outputs.json }}
+    steps:
+      - name: Cache Restore
+        uses: actions/cache@v3
+        id: cache-restore
+        with:
+          path: |
+            ./*
+          key: ${{ github.sha }} 
+      - name: Get Access Token
+        uses: ./
+        id: getAccessToken
+        with:
+          operation: getAccessToken
+          api-base-url: ${{ secrets.API_BASE_URL }}
+          did: ${{ secrets.ORGANIZATION_DID_WEB }}
+          token-endpoint: ${{ secrets.TOKEN_ENDPOINT }}
+          token-audience: ${{ secrets.TOKEN_AUDIENCE }} 
+          client-id: ${{ secrets.CLIENT_ID }}
+          client-secret: ${{ secrets.CLIENT_SECRET }}
+      - name: Get Credentials
+        uses: ./
+        id: getCredentials
+        with:
+          operation: getCredentials
+          api-base-url: ${{ secrets.API_BASE_URL }}
+          access-token: ${{ steps.getAccessToken.outputs.json }}
+          
+      - name: Review the credentials
+        run: |-
+          echo '${{ steps.getCredentials.outputs.json }}' >> credentials.json
+      - name: Upload the work as an artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: recent-credentials
+          path: credentials.json
+          
+  
+
+    
+    
