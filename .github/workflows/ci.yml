@@ -31,6 +31,7 @@ jobs:
           #     ./dist/*
           #     ./action.yml
           #   key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          
   get-credentials:
     needs:
       - coverage
@@ -62,6 +63,32 @@ jobs:
         id: getCredentials
         with:
           operation-id: getCredentials
+
+  store-credential:
+    needs:
+      - coverage
+    runs-on: ubuntu-latest
+    name: Store Credential
+    steps:
+      - name: Cache Restore
+        uses: actions/cache@v3
+        id: cache-restore
+        with:
+          path: |
+            ./*
+          key: ${{ github.sha }}
+           
+      - name: Get Access Token
+        uses: ./
+        id: getAccessToken
+        with:
+          operation-id: getAccessToken
+          api-base-url: ${{ secrets.API_BASE_URL }}
+          did: ${{ secrets.ORGANIZATION_DID_WEB }}
+          token-endpoint: ${{ secrets.TOKEN_ENDPOINT }}
+          token-audience: ${{ secrets.TOKEN_AUDIENCE }} 
+          client-id: ${{ secrets.CLIENT_ID }}
+          client-secret: ${{ secrets.CLIENT_SECRET }}
 
       - name: Store Credential
         uses: ./
