@@ -22,10 +22,10 @@ async function run() {
     const response = await operationSwitch(opts);
     // TODO: consider security issues with this approach...
     // The action should probably only export masked variables...
-    if (opts.operationId !== 'getAccessToken'){
-      core.setOutput("json", JSON.stringify(response));
-    } else {
+    if (opts.operationId === 'getAccessToken'){
       core.exportVariable("access_token", response)
+    } else {
+      core.setOutput("json", JSON.stringify(response));
     }
   } catch (error) {
     core.setFailed(error.message);
