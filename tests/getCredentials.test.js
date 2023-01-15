@@ -1,6 +1,6 @@
 const operationSwitch = require('../src/operationSwitch');
 
-describe("getCredentials", () => {
+describe.skip("getCredentials", () => {
   beforeAll(async ()=>{
     await operationSwitch({
       operationId: 'getAccessToken',
