@@ -1,20 +1,10 @@
 name: Demo
-
 on: [workflow_dispatch]
-
 jobs:
   store-credential:
     runs-on: ubuntu-latest
     name: Store Credential
     steps:
-      - name: Cache Restore
-        uses: actions/cache@v3
-        id: cache-restore
-        with:
-          path: |
-            ./*
-          key: ${{ github.sha }}
-           
       - name: Get Access Token
         uses: transmute-industries/verifiable-data-platform-github-action@v0.0.1
         id: getAccessToken
@@ -26,7 +16,6 @@ jobs:
           token-audience: ${{ secrets.TOKEN_AUDIENCE }} 
           client-id: ${{ secrets.CLIENT_ID }}
           client-secret: ${{ secrets.CLIENT_SECRET }}
-
       - name: Store Credential
         uses: transmute-industries/verifiable-data-platform-github-action@v0.0.1
         id: storeCredential
