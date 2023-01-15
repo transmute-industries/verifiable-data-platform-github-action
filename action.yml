@@ -8,6 +8,10 @@ inputs:
     description: |
       An operationId from the API Documentation.
     require: true
+
+  verifiable-credential:
+    description: |
+      A string encoded W3C Verifiable Credential.
   
   api-base-url:
     description: |

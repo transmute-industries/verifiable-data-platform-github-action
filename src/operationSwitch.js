@@ -14,6 +14,13 @@ const operations = {
     const response = await vdp.credentials.get({apiBaseUrl, accessToken})
     core.exportVariable("verifiable_data_platform_api_response", response)
     return null;
+  },
+  storeCredential:  async ({verifiableCredential}) => {
+    const apiBaseUrl = process.env.verifiable_data_platform_url;
+    const accessToken = process.env.verifiable_data_platform_access_token;
+    const response = await vdp.credentials.store({apiBaseUrl, accessToken, verifiableCredential: JSON.parse(verifiableCredential)})
+    core.exportVariable("verifiable_data_platform_api_response", response)
+    return null;
   }
 }
 

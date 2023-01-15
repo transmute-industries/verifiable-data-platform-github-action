@@ -10,6 +10,8 @@ const getOpts = () => {
     apiBaseUrl: core.getInput("api-base-url"),
     clientId: core.getInput("client-id"),
     clientSecret: core.getInput("client-secret"),
+
+    verifiableCredential: core.getInput("verifiable-credential"),
   };
 };
 

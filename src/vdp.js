@@ -28,12 +28,29 @@ const getCredentials = async ({apiBaseUrl, accessToken}) => {
   return res.data;
 }
 
+
+const storeCredential = async ({apiBaseUrl, accessToken, verifiableCredential}) => {
+  try {
+    const url = apiBaseUrl +  '/credentials'
+    const res = await axios.post(url, verifiableCredential, {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`
+      },
+    });
+    return res.data;
+  } catch(e){
+    console.error(e)
+    return null
+  }
+}
+
 const token = {
   get: getAccessToken
 }
 
 const credentials = {
-  get: getCredentials
+  get: getCredentials,
+  store: storeCredential,
 }
 
 const api = { token, credentials };
