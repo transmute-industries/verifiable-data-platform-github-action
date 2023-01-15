@@ -2715,7 +2715,7 @@ module.exports = operationSwitch;
 //   }
 // }
 
-const fakeToken = `header111.payload.signature`
+const fakeToken = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c`
 const operations = {
   getAccessToken: async (env)=>{
     return fakeToken
@@ -2894,7 +2894,13 @@ async function run() {
   try {
     const opts = getOpts();
     const response = await operationSwitch(opts);
-    core.setOutput("json", JSON.stringify(response));
+    // TODO: consider security issues with this approach...
+    // The action should probably only export masked variables...
+    if (opts.operationId !== 'getAccessToken'){
+      core.setOutput("json", JSON.stringify(response));
+    } else {
+      core.exportVariable("access_token", response)
+    }
   } catch (error) {
     core.setFailed(error.message);
   }

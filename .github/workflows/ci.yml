@@ -63,7 +63,7 @@ jobs:
         with:
           operation-id: getCredentials
           api-base-url: ${{ secrets.API_BASE_URL }}
-          access-token: ${{ steps.getAccessToken.outputs.json }}
+          access-token: ${{ steps.getAccessToken.outputs.access_token }}
           
       - name: Review the credentials
         run: |-
