@@ -50,7 +50,7 @@ jobs:
         uses: ./
         id: getAccessToken
         with:
-          operation: getAccessToken
+          operation-id: getAccessToken
           api-base-url: ${{ secrets.API_BASE_URL }}
           did: ${{ secrets.ORGANIZATION_DID_WEB }}
           token-endpoint: ${{ secrets.TOKEN_ENDPOINT }}
@@ -61,7 +61,7 @@ jobs:
         uses: ./
         id: getCredentials
         with:
-          operation: getCredentials
+          operation-id: getCredentials
           api-base-url: ${{ secrets.API_BASE_URL }}
           access-token: ${{ steps.getAccessToken.outputs.json }}
           

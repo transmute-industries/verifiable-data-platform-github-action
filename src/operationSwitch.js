@@ -31,7 +31,7 @@ const operationSwitch = async (env) => {
   if (operations[env.operationId]){
     return operations[env.operationId](env)
   }
- throw new Error('GitHub Action does not operation: ' + env.operationId)
+ throw new Error('GitHub Action does not operation-id: ' + env.operationId)
 }
 
 module.exports = operationSwitch
