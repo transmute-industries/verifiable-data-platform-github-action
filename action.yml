@@ -9,10 +9,37 @@ inputs:
       An operationId from the API Documentation.
     require: true
 
+  contact-id:
+    description: |
+      An contactId from the API Documentation.
+      
+  organization-id:
+    description: |
+      An organizationId from the API Documentation.
+      
   verifiable-credential:
     description: |
       A string encoded W3C Verifiable Credential.
   
+  credential:
+    description: |
+      A string encoded W3C Verifiable Credential of media type application/credential+ld+json
+  presentation:
+    description: |
+      A string encoded W3C Verifiable Presentation of media type application/presentation+ld+json
+  query:
+    description: |
+      A string encoded query from https://w3c-ccg.github.io/vp-request-spec/
+  endpoint:
+    description: |
+      A string encoded vc-api endpoint for presentation exchange
+  domain:
+    description: |
+      A string encoded domain for a presentation.
+  challenge:
+    description: |
+      A string encoded challenge for a presentation.
+
   api-base-url:
     description: |
       Transmute application api base url
