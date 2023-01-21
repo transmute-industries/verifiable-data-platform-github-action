@@ -12,6 +12,15 @@ const getOpts = () => {
     clientSecret: core.getInput("client-secret"),
 
     verifiableCredential: core.getInput("verifiable-credential"),
+    credential: core.getInput("credential"),
+    endpoint: core.getInput("endpoint"),
+    query: core.getInput("query"),
+
+    presentation: core.getInput("presentation"),
+    domain: core.getInput("domain"),
+    challenge: core.getInput("challenge"),
+    contactId: core.getInput("contact-id"),
+    organizationId: core.getInput("organization-id"),
   };
 };
 
