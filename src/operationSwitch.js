@@ -21,7 +21,40 @@ const operations = {
     const response = await vdp.credentials.store({apiBaseUrl, accessToken, verifiableCredential: JSON.parse(verifiableCredential)})
     core.exportVariable("verifiable_data_platform_api_response", response)
     return null;
-  }
+  },
+  issueCredential:  async ({credential}) => {
+    const apiBaseUrl = process.env.verifiable_data_platform_url;
+    const accessToken = process.env.verifiable_data_platform_access_token;
+    const response = await vdp.credentials.issue({apiBaseUrl, accessToken, credential: JSON.parse(credential)})
+    core.exportVariable("verifiable_data_platform_api_response", response)
+    return null;
+  },
+  notifyPresentationAvailable:  async ({endpoint, query}) => {
+    const response = await vdp.presentations.available({endpoint, query: JSON.parse(query)})
+    core.exportVariable("verifiable_data_platform_api_response", response)
+    return null;
+  },
+  provePresentation:  async ({presentation, domain, challenge}) => {
+    const apiBaseUrl = process.env.verifiable_data_platform_url;
+    const accessToken = process.env.verifiable_data_platform_access_token;
+    const response = await vdp.presentations.prove({apiBaseUrl, accessToken, presentation: JSON.parse(presentation), domain, challenge})
+    core.exportVariable("verifiable_data_platform_api_response", response)
+    return null;
+  },
+  sendTo:  async ({contactId, presentation }) => {
+    const apiBaseUrl = process.env.verifiable_data_platform_url;
+    const accessToken = process.env.verifiable_data_platform_access_token;
+    const response = await vdp.presentations.sendTo({apiBaseUrl, accessToken, contactId, presentation: JSON.parse(presentation)})
+    core.exportVariable("verifiable_data_platform_api_response", response)
+    return null;
+  },
+  submitPresentationWithOAuth2Security:  async ({organizationId, presentation }) => {
+    const apiBaseUrl = process.env.verifiable_data_platform_url;
+    const accessToken = process.env.verifiable_data_platform_access_token;
+    const response = await vdp.presentations.submit({apiBaseUrl, accessToken, organizationId, presentation: JSON.parse(presentation)})
+    core.exportVariable("verifiable_data_platform_api_response", response)
+    return null;
+  },
 }
 
 // TODO: use proper mocking...
