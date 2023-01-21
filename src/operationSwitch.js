@@ -48,7 +48,8 @@ const operations = {
     core.exportVariable("verifiable_data_platform_api_response", response)
     return null;
   },
-  submitPresentationWithOAuth2Security:  async ({organizationId, presentation }) => {
+  submitPresentationWithOAuth2Security:  async ({did, presentation }) => {
+    const [_0, _1, _2, _3, organizationId] = did.split(':')
     const apiBaseUrl = process.env.verifiable_data_platform_url;
     const accessToken = process.env.verifiable_data_platform_access_token;
     const response = await vdp.presentations.submit({apiBaseUrl, accessToken, organizationId, presentation: JSON.parse(presentation)})
