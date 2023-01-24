@@ -26,7 +26,7 @@ jobs:
     name: Store Credential
     steps:
       - name: Get Access Token
-        uses: transmute-industries/verifiable-data-platform-github-action@v0.0.1
+        uses: transmute-industries/verifiable-data-platform-github-action@v0.0.2
         id: getAccessToken
         with:
           operation-id: getAccessToken
@@ -37,7 +37,7 @@ jobs:
           client-id: ${{ secrets.CLIENT_ID }}
           client-secret: ${{ secrets.CLIENT_SECRET }}
       - name: Store Credential
-        uses: transmute-industries/verifiable-data-platform-github-action@v0.0.1
+        uses: transmute-industries/verifiable-data-platform-github-action@v0.0.2
         id: storeCredential
         with:
           operation-id: storeCredential
