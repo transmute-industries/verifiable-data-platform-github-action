@@ -75,7 +75,14 @@ jobs:
 
 ## Develop
 
-```bash
-npm i
-npm t
+To setup this repository run:
+```
+npm install
+```
+
+Next you need to copy the variables in `.env.example` into a `.env` file and make sure they are all filled out. You can get the values for these variables by locating the application you want to use inside the VDP and clicking the "Copy .env" Button.
+
+Once your variables are set, you can test they are working by running
+```
+npm run test
 ```

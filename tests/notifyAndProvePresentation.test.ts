@@ -1,6 +1,6 @@
-const operationSwitch = require('../src/operationSwitch');
+import operationSwitch from "../src/operationSwitch";
 
-describe.skip("storeCredential", () => {
+describe("notifyPresentationAvailable", () => {
   beforeAll(async ()=>{
     await operationSwitch({
       operationId: 'getAccessToken',
@@ -12,11 +12,44 @@ describe.skip("storeCredential", () => {
       clientSecret: process.env.CLIENT_SECRET,
     });
   })
-  it("storeCredential", async () => {
+  let domain = '';
+  let challenge = '';
+  it("notifyPresentationAvailable", async () => {
     expect(process.env.verifiable_data_platform_api_response).toBeUndefined()
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [_0, _1, _2, _3, organizationId] = process.env.ORGANIZATION_DID_WEB.split(':')
     await operationSwitch({
-      operationId: 'storeCredential',
-      verifiableCredential: `${JSON.stringify({
+      operationId: 'notifyPresentationAvailable',
+      organizationId: organizationId,
+      query: `${JSON.stringify([
+        {
+          "type": "QueryByExample",
+          "credentialQuery": [
+            {
+              "type": [
+                "VerifiableCredential"
+              ],
+              "reason": "We want to present credentials."
+            }
+          ]
+        }
+      ], null, 2)}`
+    });
+    const parsed = JSON.parse(process.env.verifiable_data_platform_api_response);
+    domain = parsed.domain;
+    challenge = parsed.challenge;
+    expect(parsed.domain).toBeDefined()
+    expect(parsed.challenge).toBeDefined()
+  });
+
+  it("provePresentation", async () => {
+    const presentation = `${JSON.stringify({
+      "@context": [
+        "https://www.w3.org/2018/credentials/v1",
+      ],
+      type: ["VerifiablePresentation"],
+      holder: process.env.ORGANIZATION_DID_WEB,
+      verifiableCredential: [{
         "@context": [
           "https://www.w3.org/2018/credentials/v1",
           "https://ref.gs1.org/gs1/vc/licence-context/",
@@ -44,8 +77,22 @@ describe.skip("storeCredential", () => {
           "proofPurpose": "assertionMethod",
           "jws": "eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..HZtoLHUCGXalQH8VPClh0TcsQeNKS5i9KWLyASTQYfPIUPDMnLnjgjPJ5TVCn7S4CV7i45aTsUWkfs6cBNntBQ"
         }
-      }, null, 2)}`
+      }],
+    }, null, 2)}`
+
+    const options = `${JSON.stringify({
+      domain,
+      challenge
+    }, null, 2)}`
+
+    await operationSwitch({
+      operationId: 'provePresentation',
+      presentation,
+      options 
     });
-    expect(process.env.verifiable_data_platform_api_response).toBeDefined()
+    const parsed = JSON.parse(process.env.verifiable_data_platform_api_response);
+    expect(parsed.proof).toBeDefined()
   });
+
+  // To Do Submit Presentation Through Send End-point
 });

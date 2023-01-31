@@ -1,4 +1,4 @@
-const core = require("@actions/core");
+import * as core from '@actions/core';
 
 const getOpts = () => {
   return {
@@ -24,4 +24,4 @@ const getOpts = () => {
   };
 };
 
-module.exports = getOpts;
+export default getOpts;

@@ -1,7 +1,6 @@
-const core = require("@actions/core");
-
-const getOpts = require("./getOpts");
-const operationSwitch = require("./operationSwitch");
+import * as core from '@actions/core';
+import getOpts from './getOpts';
+import operationSwitch from './operationSwitch';
 
 async function run() {
   try {

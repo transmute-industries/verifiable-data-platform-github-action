@@ -1,10 +1,7 @@
-
-
-
-const operationSwitch = require('../src/operationSwitch');
+import operationSwitch from "../src/operationSwitch";
 
 // jest.setTimeout( 10 * 1000)
-describe.skip("submitPresentationWithOAuth2Security", () => {
+describe("submitPresentationWithOAuth2Security", () => {
   beforeAll(async ()=>{
     await operationSwitch({
       operationId: 'getAccessToken',
@@ -55,11 +52,11 @@ describe.skip("submitPresentationWithOAuth2Security", () => {
       }],
     }, null, 2)}`
     await operationSwitch({
-      operationId: 'submitPresentationWithOAuth2Security',
-      did: process.env.ORGANIZATION_DID_WEB,
-      presentation: presentation
+      operationId: 'submitDidAuthPresentationToContact',
+      presentation: presentation,
+      contactId: 'd70abab1-b219-436a-8a11-1165a74c00fc'
     });
     const parsed = JSON.parse(process.env.verifiable_data_platform_api_response)
-    expect(parsed.submitted).toBe(true)
+    expect(parsed.presentationStatus).toBe('Sent')
   });
 });

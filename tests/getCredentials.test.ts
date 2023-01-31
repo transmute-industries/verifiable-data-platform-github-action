@@ -1,6 +1,6 @@
-const operationSwitch = require('../src/operationSwitch');
+import operationSwitch from "../src/operationSwitch";
 
-describe.skip("getCredentials", () => {
+describe("getCredentials", () => {
   beforeAll(async ()=>{
     await operationSwitch({
       operationId: 'getAccessToken',
