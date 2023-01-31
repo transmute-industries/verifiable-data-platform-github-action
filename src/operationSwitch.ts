@@ -53,20 +53,12 @@ const operations = {
     core.exportVariable("verifiable_data_platform_api_response", response)
     return null;
   },
-  /*provePresentation:  async ({presentation, domain, challenge}) => {
-    const apiBaseUrl = process.env.verifiable_data_platform_url;
-    const accessToken = process.env.verifiable_data_platform_access_token;
-    const response = await vdp.presentations.prove({apiBaseUrl, accessToken, presentation: JSON.parse(presentation), domain, challenge})
+  provePresentation:  async ({presentation, options }) => {
+    const headers = generateHeaders()
+    const { data: response } = await api.presentations.provePresentation({ presentation: JSON.parse(presentation), options: JSON.parse(options) }, { headers })
     core.exportVariable("verifiable_data_platform_api_response", response)
     return null;
   },
-  sendTo:  async ({contactId, presentation }) => {
-    const apiBaseUrl = process.env.verifiable_data_platform_url;
-    const accessToken = process.env.verifiable_data_platform_access_token;
-    const response = await vdp.presentations.sendTo({apiBaseUrl, accessToken, contactId, presentation: JSON.parse(presentation)})
-    core.exportVariable("verifiable_data_platform_api_response", response)
-    return null;
-  },*/
   submitDidAuthPresentationToContact:  async ({ presentation, contactId }) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const headers = generateHeaders()
