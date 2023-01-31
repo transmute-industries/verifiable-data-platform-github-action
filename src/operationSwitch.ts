@@ -6,10 +6,11 @@ const axiosConfig = {
 }
 const api = new Api({ ...axiosConfig });
 
+let oauthToken;
+
 const generateHeaders = () => {
-  const accessToken = process.env.verifiable_data_platform_access_token;
   const headers = {
-    'Authorization': `Bearer ${accessToken}`
+    'Authorization': `Bearer ${oauthToken.access_token}`
   }
   return headers;
 }
@@ -22,8 +23,8 @@ const operations = {
       client_secret: env.clientSecret,
       audience: env.tokenAudience
     });
+    oauthToken = token
     core.exportVariable("verifiable_data_platform_access_token", token.access_token)
-    core.exportVariable("verifiable_data_platform_url", env.apiBaseUrl)
     return null;
   },
   getCredentials: async () => {
