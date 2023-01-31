@@ -1,5 +1,4 @@
-
-const operationSwitch = require('../src/operationSwitch');
+import operationSwitch from "../src/operationSwitch";
 
 describe.skip("notifyPresentationAvailable", () => {
   beforeAll(async ()=>{

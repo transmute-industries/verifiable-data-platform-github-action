@@ -1,35 +1,53 @@
-const core = require("@actions/core");
-const vdp = require('./vdp')
+import * as core from '@actions/core';
+import { Api } from './vdp';
+
+const axiosConfig = {
+  baseURL: process.env.API_BASE_URL
+}
+const api = new Api({ ...axiosConfig });
+
+const generateHeaders = () => {
+  const accessToken = process.env.verifiable_data_platform_access_token;
+  const headers = {
+    'Authorization': `Bearer ${accessToken}`
+  }
+  return headers;
+}
 
 const operations = {
   getAccessToken: async (env) => {
-    const token = await vdp.token.get(env);
-    core.exportVariable("verifiable_data_platform_access_token", token)
+    const { data: token } = await api.oauth.tokenCreate({
+      grant_type: 'client_credentials',
+      client_id: env.clientId,
+      client_secret: env.clientSecret,
+      audience: env.tokenAudience
+    });
+    core.exportVariable("verifiable_data_platform_access_token", token.access_token)
     core.exportVariable("verifiable_data_platform_url", env.apiBaseUrl)
     return null;
   },
   getCredentials: async () => {
-    const apiBaseUrl = process.env.verifiable_data_platform_url;
-    const accessToken = process.env.verifiable_data_platform_access_token;
-    const response = await vdp.credentials.get({apiBaseUrl, accessToken})
+    const headers = generateHeaders()
+    const { data: response } = await api.credentials.getCredentials({ headers })
     core.exportVariable("verifiable_data_platform_api_response", response)
     return null;
   },
   storeCredential:  async ({verifiableCredential}) => {
-    const apiBaseUrl = process.env.verifiable_data_platform_url;
-    const accessToken = process.env.verifiable_data_platform_access_token;
-    const response = await vdp.credentials.store({apiBaseUrl, accessToken, verifiableCredential: JSON.parse(verifiableCredential)})
+    const headers = generateHeaders()
+    const { data: response } = await api.credentials.createCredential(JSON.parse(verifiableCredential), { headers })
     core.exportVariable("verifiable_data_platform_api_response", response)
     return null;
   },
-  issueCredential:  async ({credential}) => {
-    const apiBaseUrl = process.env.verifiable_data_platform_url;
-    const accessToken = process.env.verifiable_data_platform_access_token;
-    const response = await vdp.credentials.issue({apiBaseUrl, accessToken, credential: JSON.parse(credential)})
+  issueCredential:  async ({credential, options = {
+    "type": "Ed25519Signature2018",
+    "created": new Date().toISOString()
+  }}) => {
+    const headers = generateHeaders()
+    const { data: response } = await api.credentials.issueCredential({ credential: JSON.parse(credential), options: options as any }, { headers })
     core.exportVariable("verifiable_data_platform_api_response", response)
     return null;
   },
-  notifyPresentationAvailable:  async ({endpoint, query}) => {
+  /*notifyPresentationAvailable:  async ({endpoint, query}) => {
     const response = await vdp.presentations.available({endpoint, query: JSON.parse(query)})
     core.exportVariable("verifiable_data_platform_api_response", response)
     return null;
@@ -55,7 +73,7 @@ const operations = {
     const response = await vdp.presentations.submit({apiBaseUrl, accessToken, organizationId, presentation: JSON.parse(presentation)})
     core.exportVariable("verifiable_data_platform_api_response", response)
     return null;
-  },
+  },*/
 }
 
 // TODO: use proper mocking...
@@ -87,4 +105,4 @@ const operationSwitch = async (env) => {
   throw new Error('GitHub Action does not operation-id: ' + env.operationId)
 }
 
-module.exports = operationSwitch
+export default operationSwitch

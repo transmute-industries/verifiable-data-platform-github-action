@@ -1,6 +1,7 @@
-const operationSwitch = require('../src/operationSwitch');
+import operationSwitch from "../src/operationSwitch";
 
-describe.skip("storeCredential", () => {
+// jest.setTimeout( 10 * 1000)
+describe.skip("submitPresentationWithOAuth2Security", () => {
   beforeAll(async ()=>{
     await operationSwitch({
       operationId: 'getAccessToken',
@@ -12,11 +13,15 @@ describe.skip("storeCredential", () => {
       clientSecret: process.env.CLIENT_SECRET,
     });
   })
-  it("storeCredential", async () => {
+  it("submitPresentationWithOAuth2Security", async () => {
     expect(process.env.verifiable_data_platform_api_response).toBeUndefined()
-    await operationSwitch({
-      operationId: 'storeCredential',
-      verifiableCredential: `${JSON.stringify({
+    const presentation = `${JSON.stringify({
+      "@context": [
+        "https://www.w3.org/2018/credentials/v1",
+      ],
+      type: ["VerifiablePresentation"],
+      holder: process.env.ORGANIZATION_DID_WEB,
+      verifiableCredential: [{
         "@context": [
           "https://www.w3.org/2018/credentials/v1",
           "https://ref.gs1.org/gs1/vc/licence-context/",
@@ -44,8 +49,14 @@ describe.skip("storeCredential", () => {
           "proofPurpose": "assertionMethod",
           "jws": "eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..HZtoLHUCGXalQH8VPClh0TcsQeNKS5i9KWLyASTQYfPIUPDMnLnjgjPJ5TVCn7S4CV7i45aTsUWkfs6cBNntBQ"
         }
-      }, null, 2)}`
+      }],
+    }, null, 2)}`
+    await operationSwitch({
+      operationId: 'submitPresentationWithOAuth2Security',
+      did: process.env.ORGANIZATION_DID_WEB,
+      presentation: presentation
     });
-    expect(process.env.verifiable_data_platform_api_response).toBeDefined()
+    const parsed = JSON.parse(process.env.verifiable_data_platform_api_response)
+    expect(parsed.submitted).toBe(true)
   });
 });
