@@ -1,6 +1,6 @@
 import operationSwitch from "../src/operationSwitch";
 
-describe.skip("notifyPresentationAvailable", () => {
+describe("notifyPresentationAvailable", () => {
   beforeAll(async ()=>{
     await operationSwitch({
       operationId: 'getAccessToken',
@@ -14,10 +14,11 @@ describe.skip("notifyPresentationAvailable", () => {
   })
   it("notifyPresentationAvailable", async () => {
     expect(process.env.verifiable_data_platform_api_response).toBeUndefined()
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [_0, _1, _2, _3, organizationId] = process.env.ORGANIZATION_DID_WEB.split(':')
     await operationSwitch({
       operationId: 'notifyPresentationAvailable',
-      endpoint: process.env.API_BASE_URL + `/organizations/${organizationId}/presentations/available`,
+      organizationId: organizationId,
       query: `${JSON.stringify([
         {
           "type": "QueryByExample",

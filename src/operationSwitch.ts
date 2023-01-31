@@ -47,12 +47,13 @@ const operations = {
     core.exportVariable("verifiable_data_platform_api_response", response)
     return null;
   },
-  /*notifyPresentationAvailable:  async ({endpoint, query}) => {
-    const response = await vdp.presentations.available({endpoint, query: JSON.parse(query)})
+  notifyPresentationAvailable:  async ({organizationId, query}) => {
+    const headers = generateHeaders()
+    const { data: response } = await api.organizations.notifyPresentationAvailable(organizationId, { query: JSON.parse(query) }, { headers })
     core.exportVariable("verifiable_data_platform_api_response", response)
     return null;
   },
-  provePresentation:  async ({presentation, domain, challenge}) => {
+  /*provePresentation:  async ({presentation, domain, challenge}) => {
     const apiBaseUrl = process.env.verifiable_data_platform_url;
     const accessToken = process.env.verifiable_data_platform_access_token;
     const response = await vdp.presentations.prove({apiBaseUrl, accessToken, presentation: JSON.parse(presentation), domain, challenge})
@@ -65,15 +66,15 @@ const operations = {
     const response = await vdp.presentations.sendTo({apiBaseUrl, accessToken, contactId, presentation: JSON.parse(presentation)})
     core.exportVariable("verifiable_data_platform_api_response", response)
     return null;
-  },
-  submitPresentationWithOAuth2Security:  async ({did, presentation }) => {
-    const [_0, _1, _2, _3, organizationId] = did.split(':')
-    const apiBaseUrl = process.env.verifiable_data_platform_url;
-    const accessToken = process.env.verifiable_data_platform_access_token;
-    const response = await vdp.presentations.submit({apiBaseUrl, accessToken, organizationId, presentation: JSON.parse(presentation)})
+  },*/
+  submitDidAuthPresentationToContact:  async ({ presentation, contactId }) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const headers = generateHeaders()
+    const { data: response } = await api.presentations.sendDidAuthPresentation({ contactId, presentation: JSON.parse(presentation)}, { headers })
+    console.log(response)
     core.exportVariable("verifiable_data_platform_api_response", response)
     return null;
-  },*/
+  },
 }
 
 // TODO: use proper mocking...
