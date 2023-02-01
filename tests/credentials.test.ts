@@ -42,8 +42,8 @@ describe("Credential Operat Tests", () => {
     });
     expect(process.env.verifiable_data_platform_api_response).toBeDefined()
     const parsed = JSON.parse(process.env.verifiable_data_platform_api_response);
-    credentialToStore = parsed;
-    expect(parsed.proof).toBeDefined();
+    credentialToStore = parsed.verifiableCredential;
+    expect(parsed.verifiableCredential.proof).toBeDefined();
   });
 
   it("getCredentials", async () => {
