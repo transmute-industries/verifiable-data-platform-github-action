@@ -4,7 +4,7 @@ import { axiosConfig } from '../../config';
 import { generateHeaders } from '../../utils';
 
 // The support for this end-point is being depreciated since we no longer support
-// BBS/BLS12381 signatures.
+// BBS/BLS12381 signatures, see https://github.com/w3c-ccg/ldp-bbs2020/issues/62
 export const deriveCredential = async({ verifiableCredential, frame, options }) => {
     const api = new Api({ ...axiosConfig });
     const headers = generateHeaders()
