@@ -6,7 +6,7 @@ import { verifyCredential } from './verifyCredential';
 import { getCredentialVisibility } from './getCredentialVisibility';
 import { changeCredentialVisibility } from './changeCredentialVisibility';
 import { getCredential } from './getCredential';
-import { updateCredentialStatus } from './updateCredentialStatus';
+import { updateCredentialStatus2 } from './updateCredentialStatus2';
 export default {
     getCredentials,
     getCredential,
@@ -15,6 +15,6 @@ export default {
     verifyCredential,
     deleteCredential,
     changeCredentialVisibility,
-    updateCredentialStatus,
+    updateCredentialStatus2,
     getCredentialVisibility
 }

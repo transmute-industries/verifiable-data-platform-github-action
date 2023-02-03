@@ -86,9 +86,9 @@ describe("Credential Operat Tests", () => {
     expect(parsed.verified).toBe(true);
   });
 
-  it("updateCredentialStatus", async () => {
+  it("updateCredentialStatus2", async () => {
     await operationSwitch({
-      operationId: 'updateCredentialStatus',
+      operationId: 'updateCredentialStatus2',
       credentialId: credentialToDelete,
       revoked: true
     });
