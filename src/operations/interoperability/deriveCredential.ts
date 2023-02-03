@@ -5,7 +5,7 @@ import { generateHeaders } from '../../utils';
 
 // The support for this end-point is being depreciated since we no longer support
 // BBS/BLS12381 signatures, see https://github.com/w3c-ccg/ldp-bbs2020/issues/62
-export const deriveCredential = async({ verifiableCredential, frame, options }) => {
+export const deriveCredential = async({ verifiableCredential, frame, options }: any) => {
     const api = new Api({ ...axiosConfig });
     const headers = generateHeaders()
     const { data: response } = await api.credentials.deriveCredential( { verifiableCredential: JSON.parse(verifiableCredential), frame: JSON.parse(frame), options: JSON.parse(options)  }, { headers })

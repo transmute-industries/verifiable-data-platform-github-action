@@ -3,7 +3,7 @@ import { Api } from '../../vdp';
 import { axiosConfig } from '../../config';
 import { generateHeaders } from '../../utils';
 
-export const deleteWorkflowInstance = async({ workflowInstanceId }) => {
+export const deleteWorkflowInstance = async({ workflowInstanceId }: any) => {
     const api = new Api({ ...axiosConfig });
     const headers = generateHeaders()
     const { data: response } = await api.workflows.deleteWorkflowInstance(workflowInstanceId, { headers })

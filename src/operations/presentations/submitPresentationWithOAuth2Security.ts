@@ -3,7 +3,7 @@ import { Api } from '../../vdp';
 import { axiosConfig } from '../../config';
 import { generateHeaders } from '../../utils';
 
-export const submitPresentationWithOAuth2Security = async({ organizationId, verifiablePresentation }) => {
+export const submitPresentationWithOAuth2Security = async({ organizationId, verifiablePresentation }: any) => {
     const api = new Api({ ...axiosConfig });
     const headers = generateHeaders()
     const { data: response } = await api.organizations.submitPresentationWithOAuth2Security(organizationId, JSON.parse(verifiablePresentation), { headers })

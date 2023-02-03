@@ -2,7 +2,7 @@ import * as core from '@actions/core';
 import { Api } from '../../vdp'; 
 import { axiosConfig } from '../../config';
 
-export const tokenCreate = async (env) => {
+export const tokenCreate = async (env: any) => {
     const api = new Api({ ...axiosConfig });
     const { data: token } = await api.oauth.tokenCreate({
       grant_type: 'client_credentials',

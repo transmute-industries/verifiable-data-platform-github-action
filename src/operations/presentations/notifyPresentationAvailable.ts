@@ -3,7 +3,7 @@ import { Api } from '../../vdp';
 import { axiosConfig } from '../../config';
 import { generateHeaders } from '../../utils';
 
-export const notifyPresentationAvailable = async({ organizationId, query }) => {
+export const notifyPresentationAvailable = async({ organizationId, query }: any) => {
     const api = new Api({ ...axiosConfig });
     const headers = generateHeaders()
     const { data: response } = await api.organizations.notifyPresentationAvailable(organizationId, { query: JSON.parse(query)}, { headers })

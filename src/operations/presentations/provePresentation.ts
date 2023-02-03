@@ -3,7 +3,7 @@ import { Api } from '../../vdp';
 import { axiosConfig } from '../../config';
 import { generateHeaders } from '../../utils';
 
-export const provePresentation = async({ presentation, options }) => {
+export const provePresentation = async({ presentation, options }: any) => {
     const api = new Api({ ...axiosConfig });
     const headers = generateHeaders()
     const { data: response } = await api.presentations.provePresentation({ presentation: JSON.parse(presentation), options: JSON.parse(options)}, { headers })

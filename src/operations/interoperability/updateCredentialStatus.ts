@@ -4,7 +4,7 @@ import { axiosConfig } from '../../config';
 import { generateHeaders } from '../../utils';
 
 // This is the VC API Spec End-point, see https://github.com/w3c-ccg/vc-api
-export const updateCredentialStatus = async({ credentialId, credentialStatus }) => {
+export const updateCredentialStatus = async({ credentialId, credentialStatus }: any) => {
     const api = new Api({ ...axiosConfig });
     const headers = generateHeaders()
     const { data: response } = await api.credentials.updateCredentialStatus( { credentialId, credentialStatus: JSON.parse(credentialStatus) }, { headers })

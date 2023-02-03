@@ -3,7 +3,7 @@ import { Api } from '../../vdp';
 import { axiosConfig } from '../../config';
 import { generateHeaders } from '../../utils';
 
-export const getWorkflowInstance = async({ workflowInstanceId }) => {
+export const getWorkflowInstance = async({ workflowInstanceId }: any) => {
     const api = new Api({ ...axiosConfig });
     const headers = generateHeaders()
     const { data: response } = await api.workflows.getWorkflowInstance(workflowInstanceId, { headers })

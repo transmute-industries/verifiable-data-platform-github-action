@@ -3,7 +3,7 @@ import { Api } from '../../vdp';
 import { axiosConfig } from '../../config';
 import { generateHeaders } from '../../utils';
 
-export const createCredential = async ({verifiableCredential}) => {
+export const createCredential = async ({verifiableCredential}: any) => {
     const api = new Api({ ...axiosConfig });
     const headers = generateHeaders()
     const { data: response } = await api.credentials.createCredential(JSON.parse(verifiableCredential), { headers })

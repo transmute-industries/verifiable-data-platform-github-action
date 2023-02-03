@@ -3,7 +3,7 @@ import { Api } from '../../vdp';
 import { axiosConfig } from '../../config';
 import { generateHeaders } from '../../utils';
 
-export const updateCredentialStatus2 = async({ credentialId, revoked }) => {
+export const updateCredentialStatus2 = async({ credentialId, revoked }: any) => {
     const api = new Api({ ...axiosConfig });
     const headers = generateHeaders()
     const { data: response } = await api.credentials.updateCredentialStatus2(credentialId, { revoked}, { headers })

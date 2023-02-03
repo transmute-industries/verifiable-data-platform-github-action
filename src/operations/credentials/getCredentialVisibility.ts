@@ -3,7 +3,7 @@ import { Api } from '../../vdp';
 import { axiosConfig } from '../../config';
 import { generateHeaders } from '../../utils';
 
-export const getCredentialVisibility = async({ credentialId }) => {
+export const getCredentialVisibility = async({ credentialId }: any) => {
     const api = new Api({ ...axiosConfig });
     const headers = generateHeaders()
     const { data: response } = await api.credentials.getCredentialVisibility(credentialId, { headers })
