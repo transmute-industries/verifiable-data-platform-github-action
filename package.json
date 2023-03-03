@@ -1,6 +1,6 @@
 {
   "name": "@transmute/verifiable-data-platform-github-action",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "",
   "private": true,
   "main": "dist/index.js",
@@ -14,9 +14,8 @@
   },
   "scripts": {
     "generate": "npx swagger-typescript-api -p https://platform.transmute.industries/openapi/openapi.json -o ./src -n vdp.ts --axios",
-    "clean": "rm -rf ./dist",
-    "prebuild": "npm run clean",
-    "build": "tsc -b",
+    "pre:build": "rm -rf dist",
+    "build": "ncc build -m src/run.ts",
     "lint": "eslint ./src --fix",
     "test": "dotenv -e .env jest",
     "coverage": "NODE_OPTIONS='--experimental-vm-modules' jest --ci --coverage",
@@ -45,7 +44,7 @@
     "@types/jest": "^29.2.6",
     "@typescript-eslint/eslint-plugin": "^5.47.1",
     "@typescript-eslint/parser": "^5.47.1",
-    "@vercel/ncc": "^0.33.4",
+    "@vercel/ncc": "^0.36.0",
     "dotenv-cli": "^4.0.0",
     "eslint": "^8.30.0",
     "jest": "^29.3.1",

@@ -6,18 +6,18 @@ jobs:
     name: Store Credential
     steps:
       - name: Get Access Token
-        uses: transmute-industries/verifiable-data-platform-github-action@v0.0.1
+        uses: transmute-industries/verifiable-data-platform-github-action@v0.0.4
         id: getAccessToken
         with:
           operation-id: getAccessToken
           api-base-url: ${{ secrets.API_BASE_URL }}
           did: ${{ secrets.ORGANIZATION_DID_WEB }}
           token-endpoint: ${{ secrets.TOKEN_ENDPOINT }}
-          token-audience: ${{ secrets.TOKEN_AUDIENCE }} 
+          token-audience: ${{ secrets.TOKEN_AUDIENCE }}
           client-id: ${{ secrets.CLIENT_ID }}
           client-secret: ${{ secrets.CLIENT_SECRET }}
       - name: Store Credential
-        uses: transmute-industries/verifiable-data-platform-github-action@v0.0.1
+        uses: transmute-industries/verifiable-data-platform-github-action@v0.0.4
         id: storeCredential
         with:
           operation-id: storeCredential
@@ -51,8 +51,24 @@ jobs:
                 "jws": "eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..HZtoLHUCGXalQH8VPClh0TcsQeNKS5i9KWLyASTQYfPIUPDMnLnjgjPJ5TVCn7S4CV7i45aTsUWkfs6cBNntBQ"
               }
             }
-          
-  
+  demo-get-credentials:
+    runs-on: ubuntu-latest
+    name: Get Credentials
+    steps:
+      - name: Get Access Token
+        uses: transmute-industries/verifiable-data-platform-github-action@v0.0.4
+        id: getAccessToken
+        with:
+          operation-id: getAccessToken
+          api-base-url: ${{ secrets.API_BASE_URL }}
+          did: ${{ secrets.ORGANIZATION_DID_WEB }}
+          token-endpoint: ${{ secrets.TOKEN_ENDPOINT }}
+          token-audience: ${{ secrets.TOKEN_AUDIENCE }}
+          client-id: ${{ secrets.CLIENT_ID }}
+          client-secret: ${{ secrets.CLIENT_SECRET }}
+      - name: Gets Credentials
+        uses: transmute-industries/verifiable-data-platform-github-action@v0.0.4
+        id: getCredentials
+        with:
+          operation-id: getCredentials
 
-    
-    
