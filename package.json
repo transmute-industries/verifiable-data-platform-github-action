@@ -1,6 +1,6 @@
 {
   "name": "@transmute/verifiable-data-platform-github-action",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Github action for Transmute's Verifiable Data Platform",
   "private": true,
   "main": "dist/index.js",
