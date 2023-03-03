@@ -71,5 +71,4 @@ jobs:
         id: getCredentials
         with:
           operation-id: getCredentials
-      - name: Output
-        run: echo "${{ env.verifiable_data_platform_api_response }}"
+
