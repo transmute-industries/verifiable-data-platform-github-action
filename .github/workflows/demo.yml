@@ -57,9 +57,9 @@ jobs:
     steps:
       - name: Get Access Token
         uses: transmute-industries/verifiable-data-platform-github-action@v0.0.4
-        id: getAccessToken
+        id: tokenCreate
         with:
-          operation-id: getAccessToken
+          operation-id: tokenCreate
           api-base-url: ${{ secrets.API_BASE_URL }}
           did: ${{ secrets.ORGANIZATION_DID_WEB }}
           token-endpoint: ${{ secrets.TOKEN_ENDPOINT }}
@@ -71,4 +71,3 @@ jobs:
         id: getCredentials
         with:
           operation-id: getCredentials
-
