@@ -25,7 +25,7 @@ jobs:
           operation-id: getCredentials
   local-get-presentations:
     runs-on: ubuntu-latest
-    name: Get Presentations
+    name: Get Presentations shared with me
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -40,9 +40,8 @@ jobs:
           token-audience: ${{ secrets.TOKEN_AUDIENCE }}
           client-id: ${{ secrets.CLIENT_ID }}
           client-secret: ${{ secrets.CLIENT_SECRET }}
-      - name: Gets Presentations
+      - name: getPresentationsSharedWithMe
         uses: ./
-        id: getPresentations
+        id: getPresentationsSharedWithMe
         with:
-          operation-id: getPresentations
-
+          operation-id: getPresentationsSharedWithMe

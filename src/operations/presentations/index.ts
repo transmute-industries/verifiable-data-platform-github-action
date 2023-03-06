@@ -3,7 +3,8 @@ import { provePresentation } from "./provePresentation";
 import { storePresentation } from "./storePresentation";
 import { verifyPresentation } from "./verifyPresentation";
 import { submitPresentationWithOAuth2Security } from "./submitPresentationWithOAuth2Security";
-import { getPresentations } from "./getPresentations";
+import { getPresentationsSharedWithMe } from "./getPresentationsSharedWithMe";
+import { getPresentationsSharedWithOthers } from "./getPresentationsSharedWithOthers";
 
 export default {
   notifyPresentationAvailable,
@@ -11,5 +12,6 @@ export default {
   storePresentation,
   verifyPresentation,
   submitPresentationWithOAuth2Security,
-  getPresentations,
+  getPresentationsSharedWithMe,
+  getPresentationsSharedWithOthers,
 };
