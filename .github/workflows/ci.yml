@@ -1,6 +1,10 @@
 name: CI
 
-on: [workflow_dispatch]
+on:
+  push:
+    branches:
+      - 'main'
+  workflow_dispatch:
 
 jobs:
   coverage:
@@ -31,7 +35,7 @@ jobs:
           #     ./dist/*
           #     ./action.yml
           #   key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
-          
+
   get-credentials:
     needs:
       - coverage
@@ -45,16 +49,16 @@ jobs:
           path: |
             ./*
           key: ${{ github.sha }}
-           
+
       - name: Get Access Token
         uses: ./
-        id: getAccessToken
+        id: tokenCreate
         with:
-          operation-id: getAccessToken
+          operation-id: tokenCreate
           api-base-url: ${{ secrets.API_BASE_URL }}
           did: ${{ secrets.ORGANIZATION_DID_WEB }}
           token-endpoint: ${{ secrets.TOKEN_ENDPOINT }}
-          token-audience: ${{ secrets.TOKEN_AUDIENCE }} 
+          token-audience: ${{ secrets.TOKEN_AUDIENCE }}
           client-id: ${{ secrets.CLIENT_ID }}
           client-secret: ${{ secrets.CLIENT_SECRET }}
 
@@ -77,16 +81,16 @@ jobs:
           path: |
             ./*
           key: ${{ github.sha }}
-           
+
       - name: Get Access Token
         uses: ./
-        id: getAccessToken
+        id: tokenCreate
         with:
-          operation-id: getAccessToken
+          operation-id: tokenCreate
           api-base-url: ${{ secrets.API_BASE_URL }}
           did: ${{ secrets.ORGANIZATION_DID_WEB }}
           token-endpoint: ${{ secrets.TOKEN_ENDPOINT }}
-          token-audience: ${{ secrets.TOKEN_AUDIENCE }} 
+          token-audience: ${{ secrets.TOKEN_AUDIENCE }}
           client-id: ${{ secrets.CLIENT_ID }}
           client-secret: ${{ secrets.CLIENT_SECRET }}
 
@@ -139,16 +143,16 @@ jobs:
           path: |
             ./*
           key: ${{ github.sha }}
-           
+
       - name: Get Access Token
         uses: ./
-        id: getAccessToken
+        id: tokenCreate
         with:
-          operation-id: getAccessToken
+          operation-id: tokenCreate
           api-base-url: ${{ secrets.API_BASE_URL }}
           did: ${{ secrets.ORGANIZATION_DID_WEB }}
           token-endpoint: ${{ secrets.TOKEN_ENDPOINT }}
-          token-audience: ${{ secrets.TOKEN_AUDIENCE }} 
+          token-audience: ${{ secrets.TOKEN_AUDIENCE }}
           client-id: ${{ secrets.CLIENT_ID }}
           client-secret: ${{ secrets.CLIENT_SECRET }}
 
@@ -194,16 +198,16 @@ jobs:
           path: |
             ./*
           key: ${{ github.sha }}
-           
+
       - name: Get Access Token
         uses: ./
-        id: getAccessToken
+        id: tokenCreate
         with:
-          operation-id: getAccessToken
+          operation-id: tokenCreate
           api-base-url: ${{ secrets.API_BASE_URL }}
           did: ${{ secrets.ORGANIZATION_DID_WEB }}
           token-endpoint: ${{ secrets.TOKEN_ENDPOINT }}
-          token-audience: ${{ secrets.TOKEN_AUDIENCE }} 
+          token-audience: ${{ secrets.TOKEN_AUDIENCE }}
           client-id: ${{ secrets.CLIENT_ID }}
           client-secret: ${{ secrets.CLIENT_SECRET }}
 
@@ -254,8 +258,25 @@ jobs:
                 }
               ]
             }
-          
-  
-
-    
-    
+  getPresentationsSharedWithMe:
+    runs-on: ubuntu-latest
+    name: Get Presentations shared with me
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Get Access Token
+        uses: ./
+        id: tokenCreate
+        with:
+          operation-id: tokenCreate
+          api-base-url: ${{ secrets.API_BASE_URL }}
+          did: ${{ secrets.ORGANIZATION_DID_WEB }}
+          token-endpoint: ${{ secrets.TOKEN_ENDPOINT }}
+          token-audience: ${{ secrets.TOKEN_AUDIENCE }}
+          client-id: ${{ secrets.CLIENT_ID }}
+          client-secret: ${{ secrets.CLIENT_SECRET }}
+      - name: getPresentationsSharedWithMe
+        uses: ./
+        id: getPresentationsSharedWithMe
+        with:
+          operation-id: getPresentationsSharedWithMe

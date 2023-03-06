@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import operationSwitch from "../src/operationSwitch";
 
 describe("Credential Operat Tests", () => {
@@ -19,7 +20,7 @@ describe("Credential Operat Tests", () => {
       did: process.env.ORGANIZATION_DID_WEB
     });
     expect(process.env.verifiable_data_platform_api_response).toBeDefined()
-    const parsed = JSON.parse(process.env.verifiable_data_platform_api_response);
+    const parsed = JSON.parse(process.env.verifiable_data_platform_api_response!);
     expect(parsed.didDocument).toBeDefined();
   });
 
@@ -55,7 +56,7 @@ describe("Credential Operat Tests", () => {
       })}`
     });
     expect(process.env.verifiable_data_platform_api_response).toBeDefined()
-    const parsed = JSON.parse(process.env.verifiable_data_platform_api_response);
+    const parsed = JSON.parse(process.env.verifiable_data_platform_api_response!);
     expect(parsed.verifiableCredential.proof).toBeDefined();
   });
 
@@ -64,7 +65,7 @@ describe("Credential Operat Tests", () => {
       operationId: 'getCredentials',
     });
     expect(process.env.verifiable_data_platform_api_response).toBeDefined()
-    const parsed = JSON.parse(process.env.verifiable_data_platform_api_response);
+    const parsed = JSON.parse(process.env.verifiable_data_platform_api_response!);
     expect(parsed.items).toBeDefined();
     credentialToDelete = parsed.items[0];
   });
@@ -72,14 +73,15 @@ describe("Credential Operat Tests", () => {
   it("updateCredentialStatus", async () => {
     await operationSwitch({
       operationId: 'updateCredentialStatus',
-      credentialId: credentialToDelete.verifiableCredential.id,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      credentialId: (credentialToDelete.verifiableCredential as any).id,
       credentialStatus: `${JSON.stringify([{
         "type": "RevocationList2020Status",
         "status": "0"
       }])}`
     });
     expect(process.env.verifiable_data_platform_api_response).toBeDefined()
-    const parsed = JSON.parse(process.env.verifiable_data_platform_api_response);
+    const parsed = JSON.parse(process.env.verifiable_data_platform_api_response!);
     expect(parsed.revoked).toBeDefined();
   });
 
@@ -91,7 +93,7 @@ describe("Credential Operat Tests", () => {
       verifiableCredential: ''
     });
     expect(process.env.verifiable_data_platform_api_response).toBeDefined()
-    const parsed = JSON.parse(process.env.verifiable_data_platform_api_response);
+    const parsed = JSON.parse(process.env.verifiable_data_platform_api_response!);
     expect(parsed.verified).toBe(true);
   });
 
@@ -101,7 +103,7 @@ describe("Credential Operat Tests", () => {
       verifiableCredential: `${JSON.stringify(credentialToDelete.verifiableCredential, null, 2)}`,
     });
     expect(process.env.verifiable_data_platform_api_response).toBeDefined()
-    const parsed = JSON.parse(process.env.verifiable_data_platform_api_response);
+    const parsed = JSON.parse(process.env.verifiable_data_platform_api_response!);
     expect(parsed.verified).toBe(true);
   });
 
@@ -111,14 +113,14 @@ describe("Credential Operat Tests", () => {
       credentialId: credentialToDelete.id
     });
     expect(process.env.verifiable_data_platform_api_response).toBeDefined()
-    const parsed = JSON.parse(process.env.verifiable_data_platform_api_response);
+    const parsed = JSON.parse(process.env.verifiable_data_platform_api_response!);
     expect(parsed.success).toBe(true);
   });
 
   let domain = '';
   let challenge = '';
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_0, _1, _2, _3, organizationId] = process.env.ORGANIZATION_DID_WEB.split(':')
+  const [_0, _1, _2, _3, organizationId] = process.env.ORGANIZATION_DID_WEB!.split(':')
   it("notifyPresentationAvailable", async () => {
     await operationSwitch({
       operationId: 'notifyPresentationAvailable',
@@ -137,7 +139,7 @@ describe("Credential Operat Tests", () => {
         }
       ], null, 2)}`
     });
-    const parsed = JSON.parse(process.env.verifiable_data_platform_api_response);
+    const parsed = JSON.parse(process.env.verifiable_data_platform_api_response!);
     domain = parsed.domain;
     challenge = parsed.challenge;
     expect(parsed.domain).toBeDefined()
@@ -165,7 +167,7 @@ describe("Credential Operat Tests", () => {
       presentation,
       options 
     });
-    const parsed = JSON.parse(process.env.verifiable_data_platform_api_response);
+    const parsed = JSON.parse(process.env.verifiable_data_platform_api_response!);
     vpToSend = parsed.verifiablePresentation
     expect(parsed.verifiablePresentation.proof).toBeDefined()
   });
@@ -176,7 +178,7 @@ describe("Credential Operat Tests", () => {
       organizationId: organizationId,
       verifiablePresentation: `${JSON.stringify(vpToSend)}`,
     });
-    const parsed = JSON.parse(process.env.verifiable_data_platform_api_response);
+    const parsed = JSON.parse(process.env.verifiable_data_platform_api_response!);
     expect(parsed.verified).toBeDefined()
   });
 
@@ -188,7 +190,7 @@ describe("Credential Operat Tests", () => {
         "challenge": challenge
       })}`
     });
-    const parsed = JSON.parse(process.env.verifiable_data_platform_api_response);
+    const parsed = JSON.parse(process.env.verifiable_data_platform_api_response!);
     expect(parsed.verified).toBeDefined()
   });
 
@@ -198,7 +200,7 @@ describe("Credential Operat Tests", () => {
       organizationId: organizationId,
       verifiablePresentation: `${JSON.stringify(vpToSend)}`,
     });
-    const parsed = JSON.parse(process.env.verifiable_data_platform_api_response);
+    const parsed = JSON.parse(process.env.verifiable_data_platform_api_response!);
     expect(parsed.submitted).toBe(true)
   });
 });
