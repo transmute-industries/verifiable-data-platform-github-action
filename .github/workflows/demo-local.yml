@@ -1,0 +1,48 @@
+name: Demo
+on: [workflow_dispatch]
+jobs:
+  local-get-credentials:
+    runs-on: ubuntu-latest
+    name: Get Credentials
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Get Access Token
+        uses: ./
+        id: tokenCreate
+        with:
+          operation-id: tokenCreate
+          api-base-url: ${{ secrets.API_BASE_URL }}
+          did: ${{ secrets.ORGANIZATION_DID_WEB }}
+          token-endpoint: ${{ secrets.TOKEN_ENDPOINT }}
+          token-audience: ${{ secrets.TOKEN_AUDIENCE }}
+          client-id: ${{ secrets.CLIENT_ID }}
+          client-secret: ${{ secrets.CLIENT_SECRET }}
+      - name: Gets Credentials
+        uses: ./
+        id: getCredentials
+        with:
+          operation-id: getCredentials
+  local-get-presentations:
+    runs-on: ubuntu-latest
+    name: Get Presentations
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Get Access Token
+        uses: ./
+        id: tokenCreate
+        with:
+          operation-id: tokenCreate
+          api-base-url: ${{ secrets.API_BASE_URL }}
+          did: ${{ secrets.ORGANIZATION_DID_WEB }}
+          token-endpoint: ${{ secrets.TOKEN_ENDPOINT }}
+          token-audience: ${{ secrets.TOKEN_AUDIENCE }}
+          client-id: ${{ secrets.CLIENT_ID }}
+          client-secret: ${{ secrets.CLIENT_SECRET }}
+      - name: Gets Presentations
+        uses: ./
+        id: getPresentations
+        with:
+          operation-id: getPresentations
+

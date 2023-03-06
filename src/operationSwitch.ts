@@ -3,13 +3,15 @@ import credentials from './operations/credentials';
 import workflowDefintions from './operations/workflowDefintions';
 import workflowInstances from './operations/workflowInstances';
 import interoperability from './operations/interoperability';
+import presentations from './operations/presentations';
 
 const operations: any = {
   ...oauthOperations,
   ...credentials,
   ...workflowDefintions,
   ...workflowInstances,
-  ...interoperability
+  ...interoperability,
+  ...presentations,
 }
 
 const operationSwitch = async (env: any) => {
