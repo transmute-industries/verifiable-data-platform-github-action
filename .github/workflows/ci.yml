@@ -48,14 +48,8 @@ jobs:
     runs-on: ubuntu-latest
     name: Get Credentials
     steps:
-      - name: Cache Restore
-        uses: actions/cache@v3
-        id: cache-restore
-        with:
-          path: |
-            ./*
-          key: ${{ github.sha }}
-
+      - name: Checkout
+        uses: actions/checkout@v3
       - name: Get Access Token
         uses: ./
         id: tokenCreate
@@ -95,4 +89,3 @@ jobs:
         id: getPresentationsSharedWithMe
         with:
           operation-id: getPresentationsSharedWithMe
-          api-base-url: ${{ secrets.API_BASE_URL }}
