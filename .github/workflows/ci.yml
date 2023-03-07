@@ -3,7 +3,7 @@ name: CI
 on:
   push:
     branches:
-      - 'main'
+      - '**'
   workflow_dispatch:
 
 jobs:
@@ -15,6 +15,14 @@ jobs:
         uses: actions/checkout@v3
       - name: Install
         run: npm ci
+      - name: Add .env for converage
+        run: |
+          echo ORGANIZATION_DID_WEB=${{ secrets.ORGANIZATION_DID_WEB }} > .env
+          echo TOKEN_AUDIENCE=${{ secrets.TOKEN_AUDIENCE }} > .env
+          echo TOKEN_ENDPOINT=${{ secrets.TOKEN_ENDPOINT }} > .env
+          echo API_BASE_URL=${{ secrets.API_BASE_URL }} > .env
+          echo CLIENT_ID=${{ secrets.CLIENT_ID }} > .env
+          echo CLIENT_SECRET=${{ secrets.CLIENT_SECRET }} > .env
       - name: Coverage
         run: npm run coverage
       - name: Build
@@ -67,197 +75,6 @@ jobs:
         id: getCredentials
         with:
           operation-id: getCredentials
-
-  store-credential:
-    needs:
-      - coverage
-    runs-on: ubuntu-latest
-    name: Store Credential
-    steps:
-      - name: Cache Restore
-        uses: actions/cache@v3
-        id: cache-restore
-        with:
-          path: |
-            ./*
-          key: ${{ github.sha }}
-
-      - name: Get Access Token
-        uses: ./
-        id: tokenCreate
-        with:
-          operation-id: tokenCreate
-          api-base-url: ${{ secrets.API_BASE_URL }}
-          did: ${{ secrets.ORGANIZATION_DID_WEB }}
-          token-endpoint: ${{ secrets.TOKEN_ENDPOINT }}
-          token-audience: ${{ secrets.TOKEN_AUDIENCE }}
-          client-id: ${{ secrets.CLIENT_ID }}
-          client-secret: ${{ secrets.CLIENT_SECRET }}
-
-      - name: Store Credential
-        uses: ./
-        id: storeCredential
-        with:
-          operation-id: storeCredential
-          verifiable-credential: |
-            {
-              "@context": [
-                "https://www.w3.org/2018/credentials/v1",
-                "https://ref.gs1.org/gs1/vc/licence-context/",
-                "https://w3id.org/vc/status-list/2021/v1"
-              ],
-              "id": "did:example:60cda318-a0a7-4e39-b600-ea38bf68a31f",
-              "type": [
-                "VerifiableCredential",
-                "GS1KeyCredential"
-              ],
-              "issuer": "did:key:z6MktHQo3fRRohk44dsbE76CuiTpBmyMWq2VVjvV6aBSeE3U",
-              "issuanceDate": "2020-12-02T09:48:11Z",
-              "credentialSubject": {
-                "id": "https://id.gs1.org/01/07541234555551",
-                "extendsCredential": "did:example:b6d13abe-464d-4bb9-a568-b6d81efd57e3"
-              },
-              "credentialStatus": {
-                "id": "https://www.example.com/mycreds/status/60cda318-a0a7-4e39-b600-ea38bf68a31f",
-                "type": "StatusList2021Credential"
-              },
-              "proof": {
-                "type": "Ed25519Signature2018",
-                "created": "2023-01-03T11:29:14Z",
-                "verificationMethod": "did:key:z6MktHQo3fRRohk44dsbE76CuiTpBmyMWq2VVjvV6aBSeE3U#z6MktHQo3fRRohk44dsbE76CuiTpBmyMWq2VVjvV6aBSeE3U",
-                "proofPurpose": "assertionMethod",
-                "jws": "eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..HZtoLHUCGXalQH8VPClh0TcsQeNKS5i9KWLyASTQYfPIUPDMnLnjgjPJ5TVCn7S4CV7i45aTsUWkfs6cBNntBQ"
-              }
-            }
-
-  issue-credential:
-    needs:
-      - coverage
-    runs-on: ubuntu-latest
-    name: Issue Credential
-    steps:
-      - name: Cache Restore
-        uses: actions/cache@v3
-        id: cache-restore
-        with:
-          path: |
-            ./*
-          key: ${{ github.sha }}
-
-      - name: Get Access Token
-        uses: ./
-        id: tokenCreate
-        with:
-          operation-id: tokenCreate
-          api-base-url: ${{ secrets.API_BASE_URL }}
-          did: ${{ secrets.ORGANIZATION_DID_WEB }}
-          token-endpoint: ${{ secrets.TOKEN_ENDPOINT }}
-          token-audience: ${{ secrets.TOKEN_AUDIENCE }}
-          client-id: ${{ secrets.CLIENT_ID }}
-          client-secret: ${{ secrets.CLIENT_SECRET }}
-
-      - name: Issue Credential
-        uses: ./
-        id: issueCredential
-        with:
-          operation-id: issueCredential
-          credential: |
-            {
-              "@context": [
-                "https://www.w3.org/2018/credentials/v1",
-                "https://ref.gs1.org/gs1/vc/licence-context/",
-                "https://w3id.org/vc/status-list/2021/v1"
-              ],
-              "id": "did:example:60cda318-a0a7-4e39-b600-ea38bf68a31f",
-              "type": [
-                "VerifiableCredential",
-                "GS1KeyCredential"
-              ],
-              "issuer": "${{ secrets.ORGANIZATION_DID_WEB }}",
-              "issuanceDate": "2020-12-02T09:48:11Z",
-              "credentialSubject": {
-                "id": "https://id.gs1.org/01/07541234555551",
-                "extendsCredential": "did:example:b6d13abe-464d-4bb9-a568-b6d81efd57e3"
-              },
-              "credentialStatus": {
-                "id": "https://www.example.com/mycreds/status/60cda318-a0a7-4e39-b600-ea38bf68a31f",
-                "type": "StatusList2021Credential"
-              }
-            }
-
-  submit-presentation:
-    needs:
-      - coverage
-    runs-on: ubuntu-latest
-    name: Submit Presentation
-    steps:
-      - name: Cache Restore
-        uses: actions/cache@v3
-        id: cache-restore
-        with:
-          path: |
-            ./*
-          key: ${{ github.sha }}
-
-      - name: Get Access Token
-        uses: ./
-        id: tokenCreate
-        with:
-          operation-id: tokenCreate
-          api-base-url: ${{ secrets.API_BASE_URL }}
-          did: ${{ secrets.ORGANIZATION_DID_WEB }}
-          token-endpoint: ${{ secrets.TOKEN_ENDPOINT }}
-          token-audience: ${{ secrets.TOKEN_AUDIENCE }}
-          client-id: ${{ secrets.CLIENT_ID }}
-          client-secret: ${{ secrets.CLIENT_SECRET }}
-
-      - name: Submit Presentation
-        uses: ./
-        id: submitPresentationWithOAuth2Security
-        with:
-          operation-id: submitPresentationWithOAuth2Security
-          did: ${{ secrets.ORGANIZATION_DID_WEB }}
-          presentation: |
-            {
-              "@context": [
-                "https://www.w3.org/2018/credentials/v1"
-              ],
-              "type": [
-                "VerifiablePresentation"
-              ],
-              "holder": "${{ secrets.ORGANIZATION_DID_WEB }}",
-              "verifiableCredential": [
-                {
-                  "@context": [
-                    "https://www.w3.org/2018/credentials/v1",
-                    "https://ref.gs1.org/gs1/vc/licence-context/",
-                    "https://w3id.org/vc/status-list/2021/v1"
-                  ],
-                  "id": "did:example:60cda318-a0a7-4e39-b600-ea38bf68a31f",
-                  "type": [
-                    "VerifiableCredential",
-                    "GS1KeyCredential"
-                  ],
-                  "issuer": "did:key:z6MktHQo3fRRohk44dsbE76CuiTpBmyMWq2VVjvV6aBSeE3U",
-                  "issuanceDate": "2020-12-02T09:48:11Z",
-                  "credentialSubject": {
-                    "id": "https://id.gs1.org/01/07541234555551",
-                    "extendsCredential": "did:example:b6d13abe-464d-4bb9-a568-b6d81efd57e3"
-                  },
-                  "credentialStatus": {
-                    "id": "https://www.example.com/mycreds/status/60cda318-a0a7-4e39-b600-ea38bf68a31f",
-                    "type": "StatusList2021Credential"
-                  },
-                  "proof": {
-                    "type": "Ed25519Signature2018",
-                    "created": "2023-01-03T11:29:14Z",
-                    "verificationMethod": "did:key:z6MktHQo3fRRohk44dsbE76CuiTpBmyMWq2VVjvV6aBSeE3U#z6MktHQo3fRRohk44dsbE76CuiTpBmyMWq2VVjvV6aBSeE3U",
-                    "proofPurpose": "assertionMethod",
-                    "jws": "eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..HZtoLHUCGXalQH8VPClh0TcsQeNKS5i9KWLyASTQYfPIUPDMnLnjgjPJ5TVCn7S4CV7i45aTsUWkfs6cBNntBQ"
-                  }
-                }
-              ]
-            }
   getPresentationsSharedWithMe:
     runs-on: ubuntu-latest
     name: Get Presentations shared with me
@@ -280,3 +97,4 @@ jobs:
         id: getPresentationsSharedWithMe
         with:
           operation-id: getPresentationsSharedWithMe
+          api-base-url: ${{ secrets.API_BASE_URL }}
