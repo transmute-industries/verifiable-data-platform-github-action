@@ -18,7 +18,7 @@
     "build": "ncc build -m src/run.ts",
     "lint": "eslint ./src --fix",
     "test": "dotenv -e .env jest",
-    "coverage": "NODE_OPTIONS='--experimental-vm-modules' jest --ci --coverage",
+    "coverage": "dotenv -e .env jest --ci --coverage",
     "prerelease": "npm run build",
     "release": "npm version patch && git add ./package.json",
     "postrelease": "git push --tags",

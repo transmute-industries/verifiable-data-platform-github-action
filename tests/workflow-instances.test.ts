@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import operationSwitch from "../src/operationSwitch";
 
 describe("Credential Operat Tests", () => {
@@ -27,7 +28,7 @@ describe("Credential Operat Tests", () => {
       })}`
     });
     expect(process.env.verifiable_data_platform_api_response).toBeDefined()
-    const parsed = JSON.parse(process.env.verifiable_data_platform_api_response);
+    const parsed = JSON.parse(process.env.verifiable_data_platform_api_response!);
     createdInstance = parsed;
     expect(parsed.workflowInstance).toBeDefined();
   });
@@ -37,7 +38,7 @@ describe("Credential Operat Tests", () => {
       operationId: 'getWorkflowInstances',
     });
     expect(process.env.verifiable_data_platform_api_response).toBeDefined()
-    const parsed = JSON.parse(process.env.verifiable_data_platform_api_response);
+    const parsed = JSON.parse(process.env.verifiable_data_platform_api_response!);
     expect(parsed.items).toBeDefined();
   });
 
@@ -47,7 +48,7 @@ describe("Credential Operat Tests", () => {
       workflowInstanceId: createdInstance.id.split("/").pop()
     });
     expect(process.env.verifiable_data_platform_api_response).toBeDefined()
-    const parsed = JSON.parse(process.env.verifiable_data_platform_api_response);
+    const parsed = JSON.parse(process.env.verifiable_data_platform_api_response!);
     expect(parsed.workflowInstance).toBeDefined();
   });
 
@@ -66,7 +67,7 @@ describe("Credential Operat Tests", () => {
       }, null, 2)}`
     });
     expect(process.env.verifiable_data_platform_api_response).toBeDefined()
-    const parsed = JSON.parse(process.env.verifiable_data_platform_api_response);
+    const parsed = JSON.parse(process.env.verifiable_data_platform_api_response!);
     expect(parsed.workflowInstance).toBeDefined();
   });
 
@@ -76,7 +77,7 @@ describe("Credential Operat Tests", () => {
       workflowInstanceId: createdInstance.id.split("/").pop()
     });
     expect(process.env.verifiable_data_platform_api_response).toBeDefined()
-    const parsed = JSON.parse(process.env.verifiable_data_platform_api_response);
+    const parsed = JSON.parse(process.env.verifiable_data_platform_api_response!);
     expect(parsed.message).toBe("workflow instance has been deleted");
   });
 });
