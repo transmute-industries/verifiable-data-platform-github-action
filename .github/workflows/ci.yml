@@ -17,12 +17,12 @@ jobs:
         run: npm ci
       - name: Add .env for converage
         run: |
-          echo ORGANIZATION_DID_WEB=${{ secrets.ORGANIZATION_DID_WEB }} > .env
-          echo TOKEN_AUDIENCE=${{ secrets.TOKEN_AUDIENCE }} > .env
-          echo TOKEN_ENDPOINT=${{ secrets.TOKEN_ENDPOINT }} > .env
-          echo API_BASE_URL=${{ secrets.API_BASE_URL }} > .env
-          echo CLIENT_ID=${{ secrets.CLIENT_ID }} > .env
-          echo CLIENT_SECRET=${{ secrets.CLIENT_SECRET }} > .env
+          echo ORGANIZATION_DID_WEB=${{ secrets.ORGANIZATION_DID_WEB }} >> .env
+          echo TOKEN_AUDIENCE=${{ secrets.TOKEN_AUDIENCE }} >> .env
+          echo TOKEN_ENDPOINT=${{ secrets.TOKEN_ENDPOINT }} >> .env
+          echo API_BASE_URL=${{ secrets.API_BASE_URL }} >> .env
+          echo CLIENT_ID=${{ secrets.CLIENT_ID }} >> .env
+          echo CLIENT_SECRET=${{ secrets.CLIENT_SECRET }} >> .env
       - name: Coverage
         run: npm run coverage
       - name: Build
