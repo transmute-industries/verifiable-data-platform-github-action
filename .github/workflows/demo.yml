@@ -16,11 +16,11 @@ jobs:
           token-audience: ${{ secrets.TOKEN_AUDIENCE }}
           client-id: ${{ secrets.CLIENT_ID }}
           client-secret: ${{ secrets.CLIENT_SECRET }}
-      - name: Store Credential
+      - name: Create Credential
         uses: transmute-industries/verifiable-data-platform-github-action@v0.0.6
-        id: storeCredential
+        id: createCredential
         with:
-          operation-id: storeCredential
+          operation-id: createCredential
           verifiable-credential: |
             {
               "@context": [
