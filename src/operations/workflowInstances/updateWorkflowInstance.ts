@@ -3,6 +3,7 @@ import { Api } from '../../vdp';
 import { axiosConfig } from '../../config';
 import { generateHeaders } from '../../utils';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const updateWorkflowInstance = async ({ workflowInstanceId, workflowInstance }: any) => {
     const api = new Api({ ...axiosConfig });
     const headers = generateHeaders()
