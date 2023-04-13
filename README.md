@@ -6,7 +6,7 @@
 
 <img src="./transmute-banner.png" />
 
-#### [Questions? Contact Transmute](https://transmute.typeform.com/to/RshfIw?typeform-source=verifiable-data-platform-github-action) | <a href="https://platform.transmute.industries">Transmute OpenAPI</a> | <a href="https://guide.transmute.industries/verifiable-data-platform/">Our Guide</a> |  <a href="https://transmute.industries">Website</a>
+#### [Questions? Contact Transmute](https://transmute.typeform.com/to/RshfIw?typeform-source=verifiable-data-platform-github-action) | <a href="https://platform.transmute.industries">Transmute VDP</a> | <a href="https://guide.transmute.industries/verifiable-data-platform/">Our Guide</a> | <a href="https://transmute.industries">About Transmute</a>
 
 ## Usage
 
@@ -26,7 +26,7 @@ jobs:
           api-base-url: ${{ secrets.API_BASE_URL }}
           did: ${{ secrets.ORGANIZATION_DID_WEB }}
           token-endpoint: ${{ secrets.TOKEN_ENDPOINT }}
-          token-audience: ${{ secrets.TOKEN_AUDIENCE }} 
+          token-audience: ${{ secrets.TOKEN_AUDIENCE }}
           client-id: ${{ secrets.CLIENT_ID }}
           client-secret: ${{ secrets.CLIENT_SECRET }}
       - name: Store Credential
@@ -69,6 +69,7 @@ jobs:
 ## Develop
 
 To setup this repository run:
+
 ```
 npm install
 ```
@@ -76,6 +77,7 @@ npm install
 Next you need to copy the variables in `.env.example` into a `.env` file and make sure they are all filled out. You can get the values for these variables by locating the application you want to use inside the VDP and clicking the "Copy .env" Button.
 
 Once your variables are set, you can test they are working by running
+
 ```
 npm run test
 ```
