@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import operationSwitch from "../src/operationSwitch";
 
-describe("Credential Operat Tests", () => {
+jest.setTimeout(1 * 60 * 1000)
+
+describe('Interoperability Tests', () => {
   beforeAll(async ()=> {
     await operationSwitch({
       operationId: 'tokenCreate',
@@ -12,6 +14,26 @@ describe("Credential Operat Tests", () => {
       clientId: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
     });
+     // delete revocable credentials with an existing id.
+     await operationSwitch({
+      operationId: 'getCredentials',
+    })
+    const allWrappedRevocableCredentials = JSON.parse(
+      process.env.verifiable_data_platform_api_response!,
+    ).items.filter((vcw) => {
+      return (
+        vcw.verifiableCredential.id ===
+        'urn:uuid:45a44711-e457-4fa8-9b89-69fe0287c86a'
+      )
+    })
+    await Promise.all(
+      allWrappedRevocableCredentials.map(async (vcw) => {
+        return await operationSwitch({
+          operationId: 'deleteCredential',
+          credentialId: vcw.id,
+        })
+      }),
+    )
   })
 
   it("resolve", async () => {
