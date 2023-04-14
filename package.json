@@ -1,7 +1,7 @@
 {
   "name": "@transmute/verifiable-data-platform-github-action",
-  "version": "0.1.0",
-  "description": "Github action for Transmute's Verifiable Data Platform",
+  "version": "0.1.1",
+  "description": "Transmute Verifiable Data with GitHub Actions. Issue, Present and Verify W3C Verifiable Credentials and Decentralized Identifiers.",
   "private": true,
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
