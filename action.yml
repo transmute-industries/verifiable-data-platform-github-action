@@ -1,6 +1,6 @@
 name: "Transmute Verifiable Data Platform GitHub Action"
 description: |
-  Transmute Verifiable Data with GitHub Workflows.
+  Issue, Present and Verify W3C Verifiable Credentials and Decentralized Identifiers.
   See: https://platform.transmute.industries
   
 branding:
