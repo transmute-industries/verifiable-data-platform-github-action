@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import operationSwitch from "../src/operationSwitch";
 
-describe("Credential Operat Tests", () => {
+jest.setTimeout( 1 * 60 * 1000);
+
+describe("Workflow Definition Tests", () => {
   beforeAll(async () => {
     await operationSwitch({
       operationId: "tokenCreate",
@@ -11,6 +14,17 @@ describe("Credential Operat Tests", () => {
       clientId: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
     });
+    await operationSwitch({
+      operationId: "getWorkflowDefinitions",
+    });
+    await Promise.all(JSON.parse(
+      process.env.verifiable_data_platform_api_response!
+    ).items.map(async (wf)=>{
+      return await operationSwitch({
+        operationId: "deleteWorkflowDefinition",
+        workflowDefinitionId: wf.id.split("/").pop(),
+      });
+    }))
   });
   let createdDefinition;
   it("createWorkflowDefinition", async () => {

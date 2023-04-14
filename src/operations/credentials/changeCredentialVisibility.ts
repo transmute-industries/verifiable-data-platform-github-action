@@ -3,6 +3,7 @@ import { Api } from '../../vdp';
 import { axiosConfig } from '../../config';
 import { generateHeaders } from '../../utils';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const changeCredentialVisibility = async({ credentialId, visibility }: any) => {
     const api = new Api({ ...axiosConfig });
     const headers = generateHeaders()

@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import operationSwitch from "../src/operationSwitch";
 
-describe("Credential Operat Tests", () => {
+jest.setTimeout( 1 * 60 * 1000);
+
+describe("Credential Tests", () => {
   beforeAll(async ()=> {
     await operationSwitch({
       operationId: 'tokenCreate',

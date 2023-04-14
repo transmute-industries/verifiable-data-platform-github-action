@@ -2,6 +2,7 @@ import * as core from "@actions/core";
 import { Api } from "../../vdp";
 import { axiosConfig } from "../../config";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const tokenCreate = async (env: any) => {
   const api = new Api({ ...axiosConfig });
   const { data: token } = await api.oauth.tokenCreate({

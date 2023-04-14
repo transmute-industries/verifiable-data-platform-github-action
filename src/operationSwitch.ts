@@ -5,6 +5,7 @@ import workflowInstances from './operations/workflowInstances';
 import interoperability from './operations/interoperability';
 import presentations from './operations/presentations';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const operations: any = {
   ...oauthOperations,
   ...credentials,
@@ -14,6 +15,7 @@ const operations: any = {
   ...presentations,
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const operationSwitch = async (env: any) => {
   if (operations[env.operationId as string]){
     return operations[env.operationId as string](env)
