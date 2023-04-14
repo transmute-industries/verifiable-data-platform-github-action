@@ -1,7 +1,7 @@
 name: "Transmute Verifiable Data Platform GitHub Action"
 description: |
-  This action enables Verifiable Data Platform operations within GitHub Workflows.
-  See: https://platform.transmute.industries/openapi/
+  Transmute Verifiable Data with GitHub Workflows.
+  See: https://platform.transmute.industries
 inputs:
 
   operation-id:
