@@ -2,6 +2,11 @@ name: "Transmute Verifiable Data Platform GitHub Action"
 description: |
   Transmute Verifiable Data with GitHub Workflows.
   See: https://platform.transmute.industries
+  
+branding:
+  icon: 'anchor'
+  color: 'purple'
+
 inputs:
 
   operation-id:
