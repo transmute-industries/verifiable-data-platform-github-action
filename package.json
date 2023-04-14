@@ -28,7 +28,14 @@
     "type": "git",
     "url": "https://github.com/transmute-industries/verifiable-data-platform-github-action.git"
   },
-  "keywords": [],
+  "keywords": [
+    "verifiable",
+    "credentials",
+    "decentralized",
+    "identifiers",
+    "actions",
+    "github-actions"
+  ],
   "author": "Orie Steele",
   "license": "Apache-2.0",
   "bugs": {
